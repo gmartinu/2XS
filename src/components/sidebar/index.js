@@ -14,10 +14,6 @@ import {
 const useStyles = makeStyles(theme => ({
   list: {
     width: 250,
-    height: '90%'
-  },
-  endList: {
-    height: '10%'
   },
   header: {
     background: theme.palette.primary.main,
@@ -42,7 +38,6 @@ function SideBar(props) {
   };
 
   const handleOpenModal = (city) => {
-    if(city.name === dialog.props?.name) return;
     return setDialog(_v => ({..._v, open: true, props: city}))
   }
 
@@ -58,7 +53,7 @@ function SideBar(props) {
           className={classes.header}
         >
           <Typography variant="h4">
-            Results
+            Cities
           </Typography>
         </div>
         <Divider />
@@ -72,9 +67,6 @@ function SideBar(props) {
             </>
           ))}
         </List>
-      </div>
-      <div className={classes.endList}>
-        
       </div>
     </Drawer>
   )

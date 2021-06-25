@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 
 import { Dialog } from 'components'
-import { makeStyles, Typography, withStyles, Box } from '@material-ui/core';
+import { makeStyles, Typography, withStyles, Box, useTheme, useMediaQuery } from '@material-ui/core';
 
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -45,7 +45,8 @@ function DetailsDialog(props) {
   const { dialog, setDialog } = props;
   const { open, props: city } = dialog;
 
-  console.log(city)
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const K2C = (temp, noC) => `${(Number(temp) - 273.15).toFixed(1)}${noC ? '' : '°C'}`
 
@@ -63,7 +64,7 @@ function DetailsDialog(props) {
     >
       {city ? 
         <div>
-          <Box display="flex">
+          <Box display={isMobile ? "block": "flex"}>
             <Typography className={classes.temp_margin} variant='h5'>
               Temperature: {K2C(city.main.temp)}
             </Typography>
@@ -79,7 +80,7 @@ function DetailsDialog(props) {
           <Typography variant="subtitle2">
             Feels Like {K2C(city.main.feels_like)} with {city.weather[0].description}.
           </Typography>
-          <Box display="flex" alignContent="center" >
+          <Box display={isMobile ? "block": "flex"} alignContent="center" >
             <Typography className={[classes.temp_margin, classes.text_center]} variant="body2">
               {/* Using Inline Style only because of to "animate" the wind direction */}
               Wind speed: &nbsp;
@@ -94,7 +95,7 @@ function DetailsDialog(props) {
               {city.main.pressure}hPa
             </Typography>
           </Box>
-          <Box display="flex" alignContent="center">
+          <Box display={isMobile ? "block": "flex"} alignContent="center">
             <Typography className={classes.temp_margin} variant="body2">
               Humidity: &nbsp; 
               {city.main.humidity}% 
