@@ -54,10 +54,10 @@ const DialogActions = withStyles((theme) => ({
 
   
 function MainDialog(props) {
-  const { open, title, onClose, children } = props;
+  const { open, title, onClose, children, ...rest } = props;
 
   return (
-    <Dialog onClose={onClose} open={open}>
+    <Dialog onClose={onClose} open={open} {...rest}>
       <DialogTitle onClose={onClose}>
         {title}
       </DialogTitle>

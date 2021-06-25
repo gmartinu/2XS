@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Map, SearchButton, SideBar } from 'components';
+import { Map, SearchButton, SideBar, DetailsDialog } from 'components';
 
 function App() {
   const [marker, setMarker] = React.useState({
@@ -10,10 +10,17 @@ function App() {
 
   const [weatherList, setWeatherList] = React.useState([]);
   const [list, setList] = React.useState(false);
-  const [dialog, setDialog] = React.useState(false);
+  const [dialog, setDialog] = React.useState({
+    open: false,
+    props: null
+  });
 
   return (
     <>
+      <DetailsDialog 
+        dialog={dialog}
+        setDialog={setDialog}
+      />
       <SideBar 
         open={list}
         setOpen={setList}

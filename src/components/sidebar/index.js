@@ -35,11 +35,16 @@ function SideBar(props) {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    if(closeModal && open && dialog){
-      setDialog(false)
+    if(closeModal && open && dialog.props){
+      setDialog(_v => ({..._v, open: false, props: null}))
     }
-    setOpen(_v => !_v);
+    return setOpen(_v => !_v);
   };
+
+  const handleOpenModal = (city) => {
+    if(city.name === dialog.props?.name) return;
+    return setDialog(_v => ({..._v, open: true, props: city}))
+  }
 
   return (
     <Drawer onBackdropClick={toggleDrawer(true)} anchor="left" open={open} onClose={toggleDrawer}>
@@ -60,7 +65,7 @@ function SideBar(props) {
         <List>
           {weatherList?.map((city, index) => (
             <>
-              <ListItem button key={index}>
+              <ListItem onClick={() => handleOpenModal(city)} button key={index}>
                 <ListItemText primary={city.name}/>
               </ListItem>
               <Divider />
