@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+
+import { Map, SearchButton, SideBar } from 'components';
 
 function App() {
+  const [marker, setMarker] = React.useState({
+    lat: -22.903388367490805,
+    lng: -43.17590397664415,
+  })
+
+  const [weatherList, setWeatherList] = React.useState([]);
+  const [list, setList] = React.useState(false);
+  const [dialog, setDialog] = React.useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <SideBar 
+        open={list}
+        setOpen={setList}
+        weatherList={weatherList}
+        setDialog={setDialog}
+        dialog={dialog}
+      />
+      <Map 
+        marker={marker} 
+        setMarker={setMarker} 
+      />
+      <SearchButton 
+        {...marker} 
+        setWeatherList={setWeatherList} 
+        setList={setList}
+      />
+    </>
   );
 }
 
