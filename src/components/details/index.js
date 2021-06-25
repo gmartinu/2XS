@@ -101,7 +101,7 @@ function DetailsDialog(props) {
             </Typography>
             <Typography variant="body2">
               Dew point: &nbsp;
-              {K2C(city.main.temp, true) - ((100 - city.main.humidity)/5)}°C 
+              {((K2C(city.main.temp, true) - ((100 - city.main.humidity)/5))).toFixed(1)}°C 
             </Typography>
           </Box>
         </div>
