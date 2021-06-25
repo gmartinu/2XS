@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Fab, CircularProgress } from '@material-ui/core';
+import { Dialog } from 'components';
+import { Fab, CircularProgress, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Search } from "@material-ui/icons";
 import { WeatherAPI } from 'data';
@@ -31,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
 function SearchButton(props) {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
 
   const handleSearch = (e) => {
     // Calling stopPropagation only for precaution pourpose 
@@ -45,24 +47,36 @@ function SearchButton(props) {
       if(res.data.cod === "200"){
         setWeatherList(res.data.list);
         setList(true);
-      }else{
-        alert("Error in the Weather API response.");
       }
     }).catch(() => {
       setLoading(false)
-      alert("No results found in this region.")
+      setError(true)
     })
   };
 
   return (
-    <Fab disabled={loading} onClick={handleSearch} color="primary" variant="extended" className={classes.fab}>
-      {loading ? 
-        <CircularProgress color='inherit' size={25} /> 
-        : 
-        <Search className={classes.extendedIcon} />
-      }
-      Search
-    </Fab>
+    <>
+      <Fab disabled={loading} onClick={handleSearch} color="primary" variant="extended" className={classes.fab}>
+        {loading ? 
+          <CircularProgress color='inherit' size={25} /> 
+          : 
+          <Search className={classes.extendedIcon} />
+        }
+        Search
+      </Fab>
+      <Dialog
+        open={error}
+        onClose={() => setError(false)}
+        title="An error occurred! Sorry :("
+        onlyBtn
+      >
+        <Typography variant='body1'>
+          Weather API did not find any results on this area!
+          <br />
+          Try to move the marker to a populated area.
+        </Typography>
+      </Dialog>
+    </>
   )
 }
 

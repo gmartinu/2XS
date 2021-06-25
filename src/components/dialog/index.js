@@ -54,11 +54,11 @@ const DialogActions = withStyles((theme) => ({
 
   
 function MainDialog(props) {
-  const { open, title, onClose, children, ...rest } = props;
+  const { open, title, onClose, children, onlyBtn, ...rest } = props;
 
   return (
     <Dialog onClose={onClose} open={open} {...rest}>
-      <DialogTitle onClose={onClose}>
+      <DialogTitle onClose={onlyBtn ? false : onClose}>
         {title}
       </DialogTitle>
       <DialogContent dividers>
@@ -78,6 +78,7 @@ MainDialog.propTypes = {
   title: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
+  onlyBtn: PropTypes.bool
 }
 
 export default MainDialog;
